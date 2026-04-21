@@ -9,8 +9,9 @@
 /*   updated: 2026/04/20 12:49:48 by elfemboc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+#include "libft.h"
 
-int	ft_strlen(char *str)
+size_t	ft_strlen(const char *str)
 {
 	int	len;
 
