@@ -32,7 +32,7 @@ int main()
 	free(mapi);
 
 	mapi = ft_strmapi("aaaaa", add_index);
-	printf("add_index applied to 00000: %s\n", mapi);
+	printf("add_index applied to aaaaa: %s\n", mapi);
 	free(mapi);
 }
 */
