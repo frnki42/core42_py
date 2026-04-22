@@ -11,5 +11,6 @@ void	*ft_memcpy(void *dest, const void *src, size_t n);
 int	ft_isalpha(char c);
 int	ft_isdigit(char c);
 char	*ft_strdup(const char *s);
+void	*ft_memmove(void *dest, const void *src, size_t n);
 
 #endif
