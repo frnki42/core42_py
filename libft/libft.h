@@ -5,6 +5,12 @@
 # include <stdint.h>
 # include <unistd.h>
 
+typedef struct	s_list
+{
+	void			*content;
+	struct s_list	*next;
+}	t_list;
+
 size_t	ft_strlen(const char *str);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 void	*ft_memset(void *s, int c, size_t n);
