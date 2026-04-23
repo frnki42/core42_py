@@ -14,11 +14,7 @@ t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *))
 		cnt = f(lst->content);
 		nde = ft_lstnew(cnt);
 		if (!nde)
-		{
-			del(cnt);
-			ft_lstclear(&new, del);
-			return (NULL);
-		}
+			return (del(cnt), ft_lstclear(&new, del), NULL);
 		ft_lstadd_back(&new, nde);
 		lst = lst->next;
 	}
