@@ -7,7 +7,7 @@ char	*ft_strrchr(const char *s, int c)
 	ptr = NULL;
 	while (*s)
 	{
-		if (*s == c)
+		if (*s == (char)c)
 			ptr = (char *)s;
 		s++;
 	}

@@ -7,14 +7,14 @@ static size_t	get_size(const char *s, char c)
 
 	i = 0;
 	size = 0;
-	while (s[i] == c)
+	while (s[i] && s[i] == c)
 		i++;
 	while (s[i])
 	{
 		size++;
 		while (s[i] && s[i] != c)
 			i++;
-		while (s[i] == c)
+		while (s[i] && s[i] == c)
 			i++;
 	}
 	return (size);
@@ -37,7 +37,7 @@ static char	**set_splt(char **splt, const char *s, char c)
 	pos	= 0;
 	while (s[i])
 	{
-		while (s[i] == c)
+		while (s[i] && s[i] == c)
 			i++;
 		len = 0;
 		while (s[i + len] && s[i + len] != c)
