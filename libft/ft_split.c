@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_split.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: elfemboc <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/04/23 15:03:35 by elfemboc          #+#    #+#             */
+/*   Updated: 2026/04/23 15:08:50 by elfemboc         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 #include "libft.h"
 
 static size_t	get_size(const char *s, char c)
@@ -34,7 +45,7 @@ static char	**set_splt(char **splt, const char *s, char c)
 	size_t	pos;
 
 	i = 0;
-	pos	= 0;
+	pos = 0;
 	while (s[i])
 	{
 		while (s[i] && s[i] == c)
