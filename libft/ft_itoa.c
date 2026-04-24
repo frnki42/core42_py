@@ -15,8 +15,8 @@ static size_t	get_size(long nbr)
 {
 	size_t	size;
 
-	size = 1;
-	if (nbr < 0)
+	size = 0;
+	if (nbr < 1)
 		size++;
 	while (nbr)
 	{
