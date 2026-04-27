@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-int	print_spec(const char **fmt, va_list lst, int *size)
+int	print_spec(const char **fmt, va_list lst)
 {
 	(*fmt)++;
 	if (**fmt == 'd' || **fmt == 'i')
