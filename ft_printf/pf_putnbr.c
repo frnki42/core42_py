@@ -32,11 +32,8 @@ int	pf_putnbr(int nbr, int size)
 #include <stdio.h>
 int	main()
 {
-	pf_putnbr(0, 0);
-	write(1, "\n", 1);
-	pf_putnbr(2147483647, 0);
-	write(1, "\n", 1);
-	pf_putnbr(-2147483648, 0);
-	write(1, "\n", 1);
+	printf(" returns size: %i\n", pf_putnbr(0, 0));
+	printf(" returns size: %i\n", pf_putnbr(2147483647, 0));
+	printf(" returns size: %i\n", pf_putnbr(-2147483648, 0));
 }
 */
