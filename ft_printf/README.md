@@ -16,7 +16,7 @@ For selecting the correct function depending on the given specifier the function
 
 ## Algorithm
 
-Due to the need to handle different `data types`, I was required to use multiple functions. Depending on the `data type` different functions will get called inside `print_spec()` which is my `dispatcher`. 
+Due to the need to handle different `data types`, multiple functions had to be used. Depending on the `data type` different functions will get called inside `print_spec()` which is the `dispatcher`.
 
 The `dispatcher` consists of 5 different functions:
 
@@ -24,7 +24,7 @@ The `dispatcher` consists of 5 different functions:
 
 **pf_putstr():** prints the passed `string` to stdout and returns its length on success. Returns `(null)` and a size of 6 when a `NULL` pointer is passed.
 
-**pf_putnbr():** prints the passed number (the function can handle numbers up to `LLONG_MAX `and down to `LLONG_MIN + 1`) in its given base. Due to my design this function can be used for the specifiers `d` `i` `u` `x` and `X` for less duplication and a cleaner code base.
+**pf_putnbr():** prints the passed number (the function can handle numbers up to `LLONG_MAX `and down to `LLONG_MIN + 1`) in its given base. Due to its design the function can be used for the specifiers `d` `i` `u` `x` and `X` for less duplication and a cleaner code base.
 **pf_putptr():** prints the passed `pointer address`. uses `uintptr_t` internally for safe pointer-to-integer conversion.
 
 **pf_putinvalid():** prints `invalid specifiers` and the associated `%`-sign.
