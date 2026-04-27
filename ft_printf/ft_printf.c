@@ -14,22 +14,22 @@
 int	print_spec(const char **fmt, va_list lst)
 {
 	(*fmt)++;
-	if (**fmt == 'd' || **fmt == 'i')
-		return (pf_putnbr(va_arg(lst, int), 0));
+	if (**fmt == '%')
+		return (pf_putchar('%'));
 	else if (**fmt == 'c')
 		return (pf_putchar(va_arg(lst, int)));
 	else if (**fmt == 's')
 		return (pf_putstr(va_arg(lst, char *)));
+	else if (**fmt == 'd' || **fmt == 'i')
+		return (pf_putnbr(va_arg(lst, int), 0, 10, 0);
+	else if (**fmt == 'u')
+		return (pf_putnbr(va_arg(lst, unsigned int), 0, 10, 0));
+	else if (**fmt == 'x')
+		return (pf_putnbr(va_arg(lst, unsigned int), 0, 16, 0));
+	else if (**fmt == 'X')
+		return (pf_putnbr(va_arg(lst, unsigned int), 0, 16, 1));
 	else if (**fmt == 'p')
 		return (pf_putptr(va_arg(lst, void *)));
-	else if (**fmt == 'u')
-		return (pf_putnbr(va_arg(lst, unsigned int), 0));
-	else if (**fmt == 'x')
-		return (pf_puthexa(va_arg(lst, unsigned int), 0));
-	else if (**fmt == 'X')
-		return (pf_puthexa(va_arg(lst, unsigned int), 1));
-	else if (**fmt == '%')
-		return (pf_putchar('%'));
 	else
 		return (pf_putinvalid(**fmt));
 }
