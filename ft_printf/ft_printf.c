@@ -15,7 +15,7 @@ int	print_spec(const char **fmt, va_list lst)
 {
 	(*fmt)++;
 	if (**fmt == 'd' || **fmt == 'i')
-		return (pf_putnbr(va_arg(lst, int)));
+		return (pf_putnbr(va_arg(lst, int), 0));
 	else if (**fmt == 'c')
 		return (pf_putchar(va_arg(lst, int)));
 	else if (**fmt == 's')
