@@ -10,15 +10,15 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
+
 int	pf_putinvalid(const char c)
 {
-	return (write(1, "%", 1), write(1, &c, 1) + 1);
+	return (write(1, "%", 1) + write(1, &c, 1));
 }
 /*
 #include <stdio.h>
 int	main()
 {
-	printf(" with printf returns: %i\n", printf("%"));
 	printf(" with pf_putinvalid returns: %i\n", pf_putinvalid('\0'));
 }
 */

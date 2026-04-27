@@ -9,7 +9,7 @@
 /*   Updated: 2026/04/26 16:20:42 by .frnki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#ifndef	FT_PRINTF_H
+#ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 # include "libft/libft.h"
 # include <stdarg.h>

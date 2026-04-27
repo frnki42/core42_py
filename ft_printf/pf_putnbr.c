@@ -13,7 +13,7 @@
 
 int	pf_putnbr(long long nbr, int size, int base, int upper)
 {
-	char *hexa;
+	char	*hexa;
 
 	hexa = "0123456789abcdef";
 	if (upper)

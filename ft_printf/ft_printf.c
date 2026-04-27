@@ -56,6 +56,7 @@ int	ft_printf(const char *fmt, ...)
 	va_end(lst);
 	return (size);
 }
+/*
 #include <stdio.h>
 int	main()
 {
@@ -71,3 +72,4 @@ int	main()
 	ft_printf("% test: %c\n", 'c');
 	printf("va_list%% test: %c\n", 'c');
 }
+*/
