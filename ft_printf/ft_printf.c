@@ -3,31 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: elfemboc <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: .frnki <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/23 15:06:14 by elfemboc          #+#    #+#             */
-/*   Updated: 2026/04/23 15:08:19 by elfemboc         ###   ########.fr       */
+/*   Created: 2026/04/20 04:20:42 by .frnki            #+#    #+#             */
+/*   Updated: 2026/04/20 16:20:42 by .frnki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-void	print_spec(const char **fmt, va_list lst, int *size)
+int	print_spec(const char **fmt, va_list lst, int *size)
 {
-	if (++fmt == 'c')
-		pf_putchar(va_arg(lst, int), 1);
-	if (fmt == 's')
-		pf_putstr(va_arg(lst, char *);
-	if (fmt == 'p')
-		pf_putptr(va_arg(lst, );
-	if (fmt == 'd' || fmt == 'i')
-		pf_putnbr();
-	if (fmt == 'u')
-		pf_putuint();
-	if (fmt == 'x')
-		pf_puthexa();
-	if (fmt == 'X')
-		pf_puthexa();
-	if (fmt == '%')
+	(*fmt)++;
+	if (**fmt == 'd' || **fmt == 'i')
+		return (pf_putnbr(va_arg(lst, int)));
+	else if (**fmt == 'c')
+		return (pf_putchar(va_arg(lst, int)));
+	else if (**fmt == 's')
+		return (pf_putstr(va_arg(lst, char *)));
+	else if (**fmt == 'p')
+		return (pf_putptr(va_arg(lst, void *)));
+	else if (**fmt == 'u')
+		return (pf_putuint(va_arg(lst, unsigned int)));
+	else if (**fmt == 'x')
+		return (pf_puthexa(va_arg(lst, unsigned int), 0));
+	else if (**fmt == 'X')
+		return (pf_puthexa(va_arg(lst, unsigned int), 1));
+	else if (**fmt == '%')
+		return (pf_putchar('%'));
+	else
+		return (pf_putinvalid(**fmt));
 }
 
 int	ft_printf(const char *fmt, ...)
@@ -42,9 +46,10 @@ int	ft_printf(const char *fmt, ...)
 	while (*fmt)
 	{
 		if (*fmt == '%')
-			print_spec(&fmt, lst, &size);
+			size += print_spec(&fmt, lst);
 		else
-			print_fmt(&fmt, &size);
+			size += write(1, fmt, 1);
+		fmt++;
 	}
 	va_end(lst);
 	return (size);
