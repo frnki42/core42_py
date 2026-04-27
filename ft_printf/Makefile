@@ -18,7 +18,8 @@ CC			= cc
 CFLAGS		= -Wall -Wextra -Werror
 
 #SRC- & OBJ-FILES
-SOURCE_FILES 	= ft_printf.c
+SOURCE_FILES 	= ft_printf.c pf_putchar.c pf_putinvalid.c pf_putnbr.c \
+				  pf_putptr.c pf_putstr.c \
 
 OBJECT_FILES = ${SOURCE_FILES:.c=.o}
 

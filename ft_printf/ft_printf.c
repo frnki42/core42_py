@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-int	print_spec(const char **fmt, va_list lst)
+static int	print_spec(const char **fmt, va_list lst)
 {
 	(*fmt)++;
 	if (**fmt == '%')
@@ -60,16 +60,33 @@ int	ft_printf(const char *fmt, ...)
 #include <stdio.h>
 int	main()
 {
-	char	str[] = "+test42_";
-	ft_printf("char test: %c\n", 'c');
-	ft_printf("str test: %s\n", str);
-	ft_printf("ptr test: %c\n", str);
-	ft_printf("dec test: %c\n", 'c');
-	ft_printf("int test: %c\n", 'c');
-	ft_printf("uint test: %c\n", 'c');
-	ft_printf("hexa test: %c\n", 'c');
-	ft_printf("HEXA test: %c\n", 'c');
-	ft_printf("% test: %c\n", 'c');
-	printf("va_list%% test: %c\n", 'c');
+	char	*str = "42";
+
+	printf(" | size: %i\n", ft_printf("CHR_TEST: %c", 'c'));
+	printf(" | size: %i\n", printf("CHR_TEST: %c", 'c'));
+	
+	printf(" | size: %i\n", ft_printf("STR_TEST: %s", str));
+	printf(" | size: %i\n", printf("STR_TEST: %s", str));
+
+	printf(" | size: %i\n", ft_printf("PTR_TEST: %p", &str));
+	printf(" | size: %i\n", printf("PTR_TEST: %p", &str));
+	
+	printf(" | size: %i\n", ft_printf("DEC_TEST: %d", 42));
+	printf(" | size: %i\n", printf("DEC_TEST: %d", 42));
+
+	printf(" | size: %i\n", ft_printf("INT_TEST: %i", 42));
+	printf(" | size: %i\n", printf("INT_TEST: %i", 42));
+
+	printf(" | size: %i\n", ft_printf("UINT_TEST: %u", 42));
+	printf(" | size: %i\n", printf("UINT_TEST: %u", 42));
+
+	printf(" | size: %i\n", ft_printf("hexa_TEST: %x", 42));
+	printf(" | size: %i\n", printf("hexa_TEST: %x", 42));
+
+	printf(" | size: %i\n", ft_printf("HEXA_TEST: %X", 42));
+	printf(" | size: %i\n", printf("HEXA_TEST: %X", 42));
+
+	printf(" | size: %i\n", ft_printf("PRCNT_TEST: %%"));
+	printf(" | size: %i\n", printf("PRCNT_TEST: %%"));
 }
 */
