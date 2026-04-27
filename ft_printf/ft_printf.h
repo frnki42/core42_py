@@ -5,13 +5,15 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: .frnki <frnki@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/04/23 15:06:14 by .frnki            #+#    #+#             */
-/*   Updated: 2026/04/23 15:08:19 by .frnki           ###   ########.fr       */
+/*   Created: 2026/04/26 04:20:42 by .frnki            #+#    #+#             */
+/*   Updated: 2026/04/26 16:20:42 by .frnki           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #ifndef	FT_PRINTF_H
 # define FT_PRINTF_H
 # include "libft/libft.h"
 # include <stdarg.h>
+
+int	ft_printf(const char *fmt, ...);
 
 #endif
