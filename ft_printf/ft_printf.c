@@ -21,7 +21,7 @@ int	print_spec(const char **fmt, va_list lst)
 	else if (**fmt == 's')
 		return (pf_putstr(va_arg(lst, char *)));
 	else if (**fmt == 'd' || **fmt == 'i')
-		return (pf_putnbr(va_arg(lst, int), 0, 10, 0);
+		return (pf_putnbr(va_arg(lst, int), 0, 10, 0));
 	else if (**fmt == 'u')
 		return (pf_putnbr(va_arg(lst, unsigned int), 0, 10, 0));
 	else if (**fmt == 'x')
@@ -30,6 +30,8 @@ int	print_spec(const char **fmt, va_list lst)
 		return (pf_putnbr(va_arg(lst, unsigned int), 0, 16, 1));
 	else if (**fmt == 'p')
 		return (pf_putptr(va_arg(lst, void *)));
+	else if (**fmt == '\0')
+		return ((*fmt)--, 0);
 	else
 		return (pf_putinvalid(**fmt));
 }
