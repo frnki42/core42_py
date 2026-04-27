@@ -11,20 +11,18 @@
 /* ************************************************************************** */
 #include "ft_printf.h"
 
-int	pf_putnbr(int nbr, int size)
+int	pf_putnbr(long long nbr, int size)
 {
-	long long	n;
 	char		tmp;
 
-	n = nbr;
-	if (n < 0)
+	if (nbr < 0)
 	{
 		size += write(1, "-", 1);
-		n = -n;
+		nbr = -nbr;
 	}
-	if (n > 9)
-		size = pf_putnbr(n / 10, size);
-	tmp = n % 10 + '0';
+	if (nbr > 9)
+		size = pf_putnbr(nbr / 10, size);
+	tmp = nbr % 10 + '0';
 	size += write(1, &tmp, 1);
 	return (size);
 }
@@ -35,5 +33,6 @@ int	main()
 	printf(" returns size: %i\n", pf_putnbr(0, 0));
 	printf(" returns size: %i\n", pf_putnbr(2147483647, 0));
 	printf(" returns size: %i\n", pf_putnbr(-2147483648, 0));
+	printf(" returns size: %i\n", pf_putnbr(4294967295, 0));
 }
 */

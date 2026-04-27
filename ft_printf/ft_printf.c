@@ -23,7 +23,7 @@ int	print_spec(const char **fmt, va_list lst)
 	else if (**fmt == 'p')
 		return (pf_putptr(va_arg(lst, void *)));
 	else if (**fmt == 'u')
-		return (pf_putuint(va_arg(lst, unsigned int)));
+		return (pf_putnbr(va_arg(lst, unsigned int), 0));
 	else if (**fmt == 'x')
 		return (pf_puthexa(va_arg(lst, unsigned int), 0));
 	else if (**fmt == 'X')
