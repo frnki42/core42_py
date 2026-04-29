@@ -13,31 +13,82 @@
 #include <stdio.h>					//remove me
 #include <fcntl.h>					//remove me
 
-int	no_newline(char **buf)
+size_t	ft_strlen(const char *str)
 {
-	printf("no_newline got executed\n");
+	int	len;
+
+	len = 0;
+	while (str[len])
+		len++;
+	return (len);
+}
+
+void	*ft_memmove(void *dest, const void *src, size_t n)
+{
+	unsigned char		*d;
+	const unsigned char	*s;
+
+	if (!dest && !src)
+		return (NULL);
+	d = dest;
+	s = src;
+	if (d > s)
+		while (n--)
+			d[n] = s[n];
+	else
+		while (n--)
+			*d++ = *s++;
+	return (dest);
+}
+
+char	*gnl_strjoin(char const *s1, char const *s2)
+{
+	char	*str;
+	size_t	len_s1;
+	size_t	len_s2;
+
+	if (!s1 || !s2)
+		return (NULL);
+	len_s1 = ft_strlen(s1);
+	len_s2 = ft_strlen(s2);
+	str = malloc(len_s1 + len_s2 + 1);
+	if (!str)
+		return (NULL);
+	ft_memmove(str, s1, len_s1);
+	ft_memmove(&str[len_s1], s2, len_s2 + 1);
+	return (str);
+}
+
+int	no_newline(char *buf)
+{
+	int	i;
+
+	if (!buf)
+		return (1);
+	i = -1;
+	while (buf[++i])
+		if (buf[i] == '\n')
+			return (0);
 	return (1);
 }
 
-char	*set_buf(char **buf, int fd)
+char	*set_buf(char *buf, int fd)
 {
 	ssize_t	size;
+	char	src[BUFFER_SIZE + 1];
 
-	*buf = malloc(BUFFER_SIZE + 1);
-	if (!*buf)
-		return (NULL);
-	size = 42;
-	while (size > 0 && no_newline(buf))
+	size = 1;
+	while (no_newline(buf) && size > 0 )
 	{
-		size = read(fd, *buf, BUFFER_SIZE);
+		size = read(fd, src, BUFFER_SIZE);
 		if (size == -1)
-			return (free(*buf), *buf = NULL, NULL);
-		printf("%s\n", *buf);
-		if (size == 0)
-			printf("size = 0");
+			return (free(buf), buf = NULL, NULL);
+		src[size] = '\0';
+		buf = gnl_strjoin(buf, src);
+		if (!buf)
+			return (NULL);
 	}
-	(*buf)[size] = '\0';
-	return (*buf);
+	return (buf);
 }
 
 char	*get_next_line(int fd)
@@ -47,10 +98,10 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
-	buf = set_buf(&buf, fd);
+	buf = set_buf(buf, fd);
 	if (!buf)
 		return (NULL);
-	return (buf);
+	return (gnl);
 }
 
 int	main(int argc, char **argv)
