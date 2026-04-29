@@ -10,10 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
-
+#include <stdio.h>					//remove me
 char	*get_next_line(int fd)
 {
-	
+	char	buf[BUFFER_SIZE];
+
+	if (read(fd, buf, BUFFER_SIZE) == -1)
+		return (NULL);
+	printf("%s", buf);
 }
 
 #include <fcntl.h>
