@@ -1,0 +1,13 @@
+this is as test file for the get_next_line project.
+we want to return each different line on its own (including \n)
+the following lines will only be random text i come up with while writing them.
+0123456789
+abcdefghijklmnopqrstuvwxyz
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+!@#$%^&*()_+{}:"?/;'[]=-
+ space at the beginning
+space at the end 
+
+^emptyline
+END_OF_FILE
+EOF
