@@ -70,21 +70,25 @@ static char	*set_gnl(char *buf)
 static char	*set_buf(char *buf, int fd)
 {
 	ssize_t	size;
-	char	dst[BUFFER_SIZE + 1];
+	char	*dst;
 
+	dst = malloc(BUFFER_SIZE + 1);
+	if (!dst)
+		return (free(buf), NULL);
 	size = 1;
 	while (no_newline(buf) && size)
 	{
 		size = read(fd, dst, BUFFER_SIZE);
 		if (size == -1)
-			return (free(buf), NULL);
+			return (free(dst), free(buf), NULL);
 		dst[size] = '\0';
 		buf = gnl_strjoin(buf, dst);
 		if (!buf)
 			return (NULL);
 		if (!buf[0])
-			return (free(buf), NULL);
+			return (free(dst), free(buf), NULL);
 	}
+	free(dst);
 	return (buf);
 }
 
