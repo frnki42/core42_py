@@ -95,17 +95,36 @@ char	*set_buf(char *buf, int fd)
 	return (buf);
 }
 
+char	*set_gnl(char *buf, char *gnl)
+{
+	size_t	i;
+	size_t	k;
+
+	i = -1;
+	while (buf[++i] != '\n')
+		;
+	gnl = malloc(i + 1);
+	if (!gnl)
+		return (NULL);
+	k = -1;
+	while (++k < i)
+		gnl[k] = buf[k];
+	gnl[k] = '\0';
+	return (gnl);
+}
+
 char	*get_next_line(int fd)
 {
 	static char	*buf;
-//	char		*gnl;
+	char		*gnl;
 
 	if (fd < 0 || BUFFER_SIZE < 1)
 		return (NULL);
 	buf = set_buf(buf, fd);
 	if (!buf)
 		return (NULL);
-	return (buf);
+	gnl = set_gnl(buf, gnl);
+	return (gnl);
 }
 
 int	main(int argc, char **argv)
@@ -122,7 +141,7 @@ int	main(int argc, char **argv)
 	gnl = get_next_line(fd);
 	if (!gnl)
 		return (free(gnl), 2);
-	printf("%s\n", gnl);
+	printf("%s", gnl);
 	free(gnl);
 	close(fd);
 	return (0);
