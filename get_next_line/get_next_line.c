@@ -11,57 +11,7 @@
 /* ************************************************************************** */
 #include "get_next_line.h"
 
-size_t	ft_strlen(const char *str)
-{
-	size_t	len;
-
-	len = 0;
-	while (str[len])
-		len++;
-	return (len);
-}
-
-void	*ft_memmove(void *dest, const void *src, size_t n)
-{
-	unsigned char		*d;
-	const unsigned char	*s;
-
-	if (!dest || !src)
-		return (NULL);
-	d = dest;
-	s = src;
-	if (d > s)
-		while (n--)
-			d[n] = s[n];
-	else
-		while (n--)
-			*d++ = *s++;
-	return (dest);
-}
-
-char	*gnl_strjoin(char *s1, char *s2)
-{
-	char	*str;
-	size_t	len_s1;
-	size_t	len_s2;
-
-	if (!s2)
-		return (free(s1), NULL);
-	len_s1 = 0;
-	if (s1)
-		len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
-	str = malloc(len_s1 + len_s2 + 1);
-	if (!str)
-		return (NULL);
-	if (s1)
-		ft_memmove(str, s1, len_s1);
-	ft_memmove(&str[len_s1], s2, len_s2 + 1);
-	free(s1);
-	return (str);
-}
-
-int	no_newline(char *buf)
+static int	no_newline(char *buf)
 {
 	int	i;
 
@@ -74,28 +24,29 @@ int	no_newline(char *buf)
 	return (1);
 }
 
-char	*set_buf(char *buf, int fd)
+static char	*trim_buf(char *buf)
 {
-	ssize_t	size;
-	char	dst[BUFFER_SIZE + 1];
+	size_t	i;
+	size_t	len_trm;
+	char	*trm;
 
-	size = 1;
-	while (no_newline(buf) && size)
-	{
-		size = read(fd, dst, BUFFER_SIZE);
-		if (size == -1)
-			return (free(buf), NULL);
-		dst[size] = '\0';
-		buf = gnl_strjoin(buf, dst);
-		if (!buf)
-			return (NULL);
-		if (!buf[0])
-			return(free(buf), NULL);
-	}
-	return (buf);
+	i = 0;
+	while (buf[i] != '\n' && buf[i])
+		i++;
+	if (buf[i] == '\0')
+		return (free(buf), NULL);
+	len_trm = ft_strlen(&buf[++i]);
+	if (!len_trm)
+		return (free(buf), NULL);
+	trm = malloc(len_trm + 1);
+	if (!trm)
+		return (free(buf), NULL);
+	gnl_memmove(trm, &buf[i], len_trm);
+	trm[len_trm] = '\0';
+	return (free(buf), trm);
 }
 
-char	*set_gnl(char *buf)
+static char	*set_gnl(char *buf)
 {
 	size_t	i;
 	size_t	k;
@@ -116,26 +67,25 @@ char	*set_gnl(char *buf)
 	return (gnl);
 }
 
-char	*trim_buf(char *buf)
+static char	*set_buf(char *buf, int fd)
 {
-	size_t	i;
-	size_t	len_trm;
-	char	*trm;
+	ssize_t	size;
+	char	dst[BUFFER_SIZE + 1];
 
-	i = 0;
-	while (buf[i] != '\n' && buf[i])
-		i++;
-	if (buf[i] == '\0')
-		return (free(buf), NULL);
-	len_trm = ft_strlen(&buf[++i]);
-	if (!len_trm)
-		return (free(buf), NULL);
-	trm = malloc(len_trm + 1);
-	if (!trm)
-		return (free(buf), NULL);
-	ft_memmove(trm, &buf[i], len_trm);
-	trm[len_trm] = '\0';
-	return (free(buf), trm);
+	size = 1;
+	while (no_newline(buf) && size)
+	{
+		size = read(fd, dst, BUFFER_SIZE);
+		if (size == -1)
+			return (free(buf), NULL);
+		dst[size] = '\0';
+		buf = gnl_strjoin(buf, dst);
+		if (!buf)
+			return (NULL);
+		if (!buf[0])
+			return (free(buf), NULL);
+	}
+	return (buf);
 }
 
 char	*get_next_line(int fd)
@@ -154,7 +104,7 @@ char	*get_next_line(int fd)
 	buf = trim_buf(buf);
 	return (gnl);
 }
-
+/*
 #include <stdio.h>
 #include <fcntl.h>
 int	main(int argc, char **argv)
@@ -178,3 +128,4 @@ int	main(int argc, char **argv)
 	close(fd);
 	return (0);
 }
+*/
