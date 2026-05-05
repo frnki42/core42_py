@@ -10,12 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 #include "get_next_line.h"
-#include <stdio.h>					//remove me
-#include <fcntl.h>					//remove me
 
 size_t	ft_strlen(const char *str)
 {
-	int	len;
+	size_t	len;
 
 	len = 0;
 	while (str[len])
@@ -48,7 +46,7 @@ char	*gnl_strjoin(char *s1, char *s2)
 	size_t	len_s2;
 
 	if (!s2)
-		return (NULL);
+		return (free(s1), NULL);
 	len_s1 = 0;
 	if (s1)
 		len_s1 = ft_strlen(s1);
@@ -86,23 +84,28 @@ char	*set_buf(char *buf, int fd)
 	{
 		size = read(fd, dst, BUFFER_SIZE);
 		if (size == -1)
-			return (free(buf), buf = NULL);
+			return (free(buf), NULL);
 		dst[size] = '\0';
 		buf = gnl_strjoin(buf, dst);
 		if (!buf)
 			return (NULL);
+		if (!buf[0])
+			return(free(buf), NULL);
 	}
 	return (buf);
 }
 
-char	*set_gnl(char *buf, char *gnl)
+char	*set_gnl(char *buf)
 {
 	size_t	i;
 	size_t	k;
+	char	*gnl;
 
-	i = -1;
-	while (buf[++i] != '\n')
-		;
+	i = 0;
+	while (buf[i] != '\n' && buf[i])
+		i++;
+	if (buf[i] == '\n')
+		i++;
 	gnl = malloc(i + 1);
 	if (!gnl)
 		return (NULL);
@@ -111,6 +114,28 @@ char	*set_gnl(char *buf, char *gnl)
 		gnl[k] = buf[k];
 	gnl[k] = '\0';
 	return (gnl);
+}
+
+char	*trim_buf(char *buf)
+{
+	size_t	i;
+	size_t	len_trm;
+	char	*trm;
+
+	i = 0;
+	while (buf[i] != '\n' && buf[i])
+		i++;
+	if (buf[i] == '\0')
+		return (free(buf), NULL);
+	len_trm = ft_strlen(&buf[++i]);
+	if (!len_trm)
+		return (free(buf), NULL);
+	trm = malloc(len_trm + 1);
+	if (!trm)
+		return (free(buf), NULL);
+	ft_memmove(trm, &buf[i], len_trm);
+	trm[len_trm] = '\0';
+	return (free(buf), trm);
 }
 
 char	*get_next_line(int fd)
@@ -123,10 +148,15 @@ char	*get_next_line(int fd)
 	buf = set_buf(buf, fd);
 	if (!buf)
 		return (NULL);
-	gnl = set_gnl(buf, gnl);
+	gnl = set_gnl(buf);
+	if (!gnl)
+		return (free(buf), NULL);
+	buf = trim_buf(buf);
 	return (gnl);
 }
 
+#include <stdio.h>
+#include <fcntl.h>
 int	main(int argc, char **argv)
 {
 	int		fd;
@@ -137,12 +167,14 @@ int	main(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 		return (write(1, "invalid file\n", 13), 1);
-	gnl = NULL;
-	gnl = get_next_line(fd);
-	if (!gnl)
-		return (free(gnl), 2);
-	printf("%s", gnl);
-	free(gnl);
+	while (42)
+	{
+		gnl = get_next_line(fd);
+		if (!gnl)
+			break ;
+		printf("%s", gnl);
+		free(gnl);
+	}
 	close(fd);
 	return (0);
 }
