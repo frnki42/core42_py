@@ -15,6 +15,7 @@ The implementation uses a **static buffer** to persist data between calls on the
 ## Instructions
 
 The project provides only the library files (`get_next_line.c`, `get_next_line_utils.c`, `get_next_line.h`).
+
 To compile and run tests, create a test file (e.g., `test_main.c`) that includes the header:
 ```c
 #include "get_next_line.h"
@@ -31,6 +32,7 @@ Then compile with:
 cc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c test_main.c -o gnl_test
 ```
  **Replace 42 with your desired buffer size. BUFFER_SIZE must be > 0.**
+
 The header includes a fallback default so it compiles even if the flag is ommited (defaults to **42**).
 
 Run the compiled `gnl_test` binary with one or more files:
