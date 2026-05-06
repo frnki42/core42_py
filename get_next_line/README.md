@@ -8,7 +8,7 @@
 ### Algorithm
 
 The implementation uses a **static buffer** to persist data between calls on the same file descriptor:
-1. If no `\n` is found in the current buffer, `read()` fetches up to `BUFFER_SIZE` bytes and appends them dynamically using `malloc()`/`free()`.
+1. If no `\n` is found in the current buffer, `read()` fetches up to `BUFFER_SIZE` bytes and appends them using `malloc()`/`free()`.
 2. Once `\n` is located, the line (including `\n`) is extracted into a new string.
 3. The remaining data after `\n` is preserved in the static buffer for the next call.
 
@@ -20,7 +20,8 @@ To compile and run tests, create a test file (e.g., `test_main.c`) that includes
 ```c
 #include "get_next_line.h"
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv) 
+{
     // ... use get_next_line() here ...
 }
 ```
