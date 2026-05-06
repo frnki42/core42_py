@@ -1,7 +1,7 @@
 *This project has been created as part of the 42 curriculum by elfemboc.*
 # get_next_line
 
-## Description
+### Description
 
 `get_next_line` is a C function that reads text from a file descriptor one line at a time. It dynamically allocates memory to handle lines of arbitrary length, manages internal state using a **static variable**, and returns each complete line (including the terminating `\n`, unless EOF is reached). Repeated calls allow sequential reading until `NULL` is returned on end-of-file or error.
 
@@ -14,23 +14,31 @@ The implementation uses a **static buffer** to persist data between calls on the
 
 ## Instructions
 
-The project provides only the library files (`get_next_line.c`, `get_next_line_utils.c`, `get_next_line.h`). To compile and run tests, link them with a test file containing `main()`.
+The project provides only the library files (`get_next_line.c`, `get_next_line_utils.c`, `get_next_line.h`).
+To compile and run tests, create a test file (e.g., `test_main.c`) that includes the header:
+```c
+#include "get_next_line.h"
 
+int main(int argc, char **argv) {
+    // ... use get_next_line() here ...
+}
+```
 ### Compilation
 
-Clone the repository and compile the project (a buffer size of 42 is used as an example) using:
+Then compile with:  
 
 ```
 cc -Wall -Wextra -Werror -D BUFFER_SIZE=42 get_next_line.c get_next_line_utils.c test_main.c -o gnl_test
 ```
+ **Replace 42 with your desired buffer size. BUFFER_SIZE must be > 0.** 
+ The header includes a fallback default so it compiles even if the flag is ommited (defaults to **42**).
 
 Run the compiled `gnl_test` binary with one or more files:
 
 ```
 ./gnl_test file1.txt [file2.txt ...]
 ```
-
-## Resources
+### Resources
 
 #### Official Documentation
 
