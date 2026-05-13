@@ -39,24 +39,24 @@ void	*gnl_memmove(void *dest, const void *src, size_t n)
 	return (dest);
 }
 
-char	*gnl_strjoin(char *s1, char *s2)
+char	*gnl_strjoin(char *buf, char *dst)
 {
 	char	*str;
-	size_t	len_s1;
-	size_t	len_s2;
+	size_t	len_buf;
+	size_t	len_dst;
 
-	if (!s2)
-		return (free(s1), NULL);
-	len_s1 = 0;
-	if (s1)
-		len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
-	str = malloc(len_s1 + len_s2 + 1);
+	if (!dst)
+		return (free(buf), NULL);
+	len_buf = 0;
+	if (buf)
+		len_buf = ft_strlen(buf);
+	len_dst = ft_strlen(dst);
+	str = malloc(len_buf + len_dst + 1);
 	if (!str)
-		return (NULL);
-	if (s1)
-		gnl_memmove(str, s1, len_s1);
-	gnl_memmove(&str[len_s1], s2, len_s2 + 1);
-	free(s1);
+		return (free(buf), NULL);
+	if (buf)
+		gnl_memmove(str, buf, len_buf);
+	gnl_memmove(&str[len_buf], dst, len_dst + 1);
+	free(buf);
 	return (str);
 }

@@ -84,7 +84,7 @@ static char	*set_buf(char *buf, int fd)
 		dst[size] = '\0';
 		buf = gnl_strjoin(buf, dst);
 		if (!buf)
-			return (NULL);
+			return (free(dst), NULL);
 		if (!buf[0])
 			return (free(dst), free(buf), NULL);
 	}
@@ -108,7 +108,6 @@ char	*get_next_line(int fd)
 	buf = trim_buf(buf);
 	return (gnl);
 }
-/*
 #include <stdio.h>
 #include <fcntl.h>
 int	main(int argc, char **argv)
@@ -132,4 +131,3 @@ int	main(int argc, char **argv)
 	close(fd);
 	return (0);
 }
-*/
