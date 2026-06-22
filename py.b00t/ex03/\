@@ -1,0 +1,21 @@
+import sys
+import string
+
+
+def text_analyzer(text):
+    """count and display character categories in the given parameter"""
+    count_upper = 0
+    count_lower = 0
+    count_spaces = 0
+    count_punctuation = 0
+    for character in text:
+        if character.isupper():
+            count_upper += 1
+        elif character.islower():
+            count_lower += 1
+        elif character.isspace():
+            count_spaces += 1
+        elif character in string.punctuation:
+            count_punctuation += 1
+
+
