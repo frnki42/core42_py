@@ -17,4 +17,8 @@ def text_analyzer(text):
             count_spaces += 1
         elif character in string.punctuation:
             count_punctuation += 1
-
+    print(f"The text contains {len(text)} printable character(s):")
+    print(f"- {count_upper} upper letter(s)")
+    print(f"- {count_lower} lower letter(s)")
+    print(f"- {count_punctuation} punctuation mark(s)")
+    print(f"- {count_spaces} space(s))
