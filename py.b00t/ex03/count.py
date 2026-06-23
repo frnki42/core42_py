@@ -21,4 +21,4 @@ def text_analyzer(text):
     print(f"- {count_upper} upper letter(s)")
     print(f"- {count_lower} lower letter(s)")
     print(f"- {count_punctuation} punctuation mark(s)")
-    print(f"- {count_spaces} space(s))
+    print(f"- {count_spaces} space(s)")
