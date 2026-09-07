@@ -117,7 +117,8 @@ def main() -> None:
     print("=== Vegetable")
     tomato = Vegetable("Tomato", 5.0, 10, 2.1, "April")
     tomato.show()
-    for i in range(1, 21):
+    print("[make tomato grow and age for 20 days]")
+    for _ in range(20):
         tomato.grow(42)
         tomato.age()
     tomato.show()
