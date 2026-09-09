@@ -21,21 +21,21 @@ class Plant:
 
 
 def main() -> None:
-    tomato = Plant()
-    tomato.name = "Tomato"
-    tomato.age_days = 45
-    tomato.height = 80.0
-    tomato.height_change = 0.0
-    tomato.daily_growth = 0.8
+    rose = Plant()
+    rose.name = "Rose"
+    rose.age_days = 30
+    rose.height = 25.0
+    rose.height_change = 0.0
+    rose.daily_growth = 0.8
 
     print("=== Garden Plant Growth ===")
-    tomato.show()
+    rose.show()
     for i in range(1, 8):
         print(f"=== Day {i} ===")
-        tomato.age()
-        tomato.grow(i)
-        tomato.show()
-    print(f"Growth this week: {tomato.height_change}cm")
+        rose.age()
+        rose.grow(42)
+        rose.show()
+    print(f"Growth this week: {rose.height_change}cm")
 
 
 if __name__ == "__main__":
