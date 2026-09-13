@@ -1,7 +1,7 @@
 import random
 
 
-ACHIEVEMENTS = [
+AVS = [
         "Crafting Genius",
         "Strategist",
         "World Savior",
@@ -18,23 +18,23 @@ ACHIEVEMENTS = [
         ]
 
 
-def gen_player_achievements() -> None:
-    amount_avs = len(ACHIEVEMENTS)
-    alice = set(random.sample(ACHIEVEMENTS, random.randint(0, amount_avs)))
-    bob = set(random.sample(ACHIEVEMENTS, random.randint(0, amount_avs)))
-    charlie = set(random.sample(ACHIEVEMENTS, random.randint(0, amount_avs)))
-    dylan = set(random.sample(ACHIEVEMENTS, random.randint(0, amount_avs)))
-    print(f"Player Alice: {alice}")
-    print(f"Player Bob: {bob}")
-    print(f"Player Charlie: {charlie}")
-    print(f"Player Dylan: {dylan}")
-    print(f"\nAll distinct achievements: {ACHIEVEMENTS}\n")
+MIN_AVS = 5
+MAX_AVS = 9
+
+
+def gen_player_achievements() -> set[str]:
+    avs = set(random.sample(AVS, random.randint(MIN_AVS, MAX_AVS)))
+    return avs
 
 
 def main() -> None:
+    amount_avs = len(AVS)
     print("=== Achievement Tracker System ===\n")
-    gen_player_achievements()
-
+    alice = gen_player_achievements()
+    print(f"Player Alice: {alice}")
+    bob = gen_player_achievements()
+    print(f"Player Bob: {bob}")
+    print(f"\nAll distinct achievements: {AVS}\n")
 
 if __name__ == "__main__":
     main()
