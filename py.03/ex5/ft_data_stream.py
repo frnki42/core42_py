@@ -1,5 +1,5 @@
-import typing               # next(), range(), len(), print(), typing.Generator
-import random               # random.*
+import random
+import typing
 
 
 PLAYER_NAMES = [
@@ -13,12 +13,13 @@ ACTION_NAMES = [
         "eat",
         "sleep",
         "grab",
-        "run",
         "move",
         "climb",
         "swim",
         "release",
         ]
+
+
 def gen_event() -> typing.Generator[tuple[str, str], None, None]:
     while True:
         name = random.choice(PLAYER_NAMES)
@@ -26,14 +27,13 @@ def gen_event() -> typing.Generator[tuple[str, str], None, None]:
         yield (name, action)
 
 
-
 def main() -> None:
     print("=== Game Data Stream Processor ===")
+    events = gen_event()
+    for i in range(1000):
+        name, action = next(events)
+        print(f"Event {i}: Player {name} did action {action}")
 
-    a = gen_event()
-    name, action = next(a)
-    print(name)
-    print(action)
 
 if __name__ == "__main__":
     main()
