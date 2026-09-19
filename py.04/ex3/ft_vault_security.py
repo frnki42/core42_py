@@ -26,9 +26,9 @@ def main() -> None:
     print("\nUsing 'secure_archive' to read from a nonexistent file:")
     print(secure_archive("/not/existing/file", READ))
     print("\nUsing 'secure_archive' to read from an inaccessible file:")
-    print(secure_archive("inaccessible_file", READ))
+    print(secure_archive("/etc/shadow", READ))
     print("\nUsing 'secure_archive' to read from a regular file:")
-    result = secure_archive("regular_file", READ)
+    result = secure_archive("ft_vault_security.py", READ)
     print(result)
     _, content = result
     print("\nUsing 'secure_archive' to write previous content to a new file:")
