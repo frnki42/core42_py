@@ -1,5 +1,6 @@
-# import abc
-# import typing
+from abc import ABC, abstractmethod
+from typing import Any
+
 
 class DataProcessor(ABC):
     @abstractmethod
