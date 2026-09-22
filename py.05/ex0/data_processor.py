@@ -38,7 +38,8 @@ class NumericProcessor(DataProcessor):
             raise TypeError("Improper numeric data")
         if not isinstance(data, list):
             data = [data]
-        for item in data:
+        items = data if isinstance(data, list) else [data]
+        for item in items:
             self._items.append((self._count, str(item)))
             self._count += 1
 
