@@ -118,58 +118,8 @@ def show_validate(proc: DataProcessor, value: Any) -> None:
     print(f" Trying to validate input '{value}': {proc.validate(value)}")
 
 
-def show_numeric_proc() -> None:
-    numeric = NumericProcessor()
-    show_validate(numeric, 42)
-    show_validate(numeric, "Hello")
-    print(" Test invalid ingestion of string 'foo' without prior validation:")
-    try:
-        numeric.ingest("foo")
-    except InvalidDataError as e:
-        print(f" Got exception: {e}")
-    data: list[int | float] = [1, 2, 3, 4, 5]
-    print(f" Processing data: {data}")
-    numeric.ingest(data)
-    print(" Extracting 3 values...")
-    for _ in range(3):
-        rank, value = numeric.output()
-        print(f" Numeric value {rank}: {value}")
-
-
-def show_text_proc() -> None:
-    text = TextProcessor()
-    show_validate(text, 42)
-    data = ["Hello", "Nexus", "World"]
-    print(f" Processing data: {data}")
-    text.ingest(data)
-    print(" Extracting 1 value...")
-    rank, value = text.output()
-    print(f" Text value {rank}: {value}")
-
-
-def show_log_proc() -> None:
-    log = LogProcessor()
-    show_validate(log, "Hello")
-    data = [
-        {LOG_LEVEL: "NOTICE", LOG_MESSAGE: "Connection to server"},
-        {LOG_LEVEL: "ERROR", LOG_MESSAGE: "Unauthorized access!!"},
-    ]
-    print(f" Processing data: {data}")
-    log.ingest(data)
-    print(" Extracting 2 values...")
-    for _ in range(2):
-        rank, value = log.output()
-        print(f" Log entry {rank}: {value}")
-
-
 def main() -> None:
-    print("=== Code Nexus - Data Processor ===")
-    print("\nTesting Numeric Processor...")
-    show_numeric_proc()
-    print("\nTesting Text Processor...")
-    show_text_proc()
-    print("\nTesting Log Processor...")
-    show_log_proc()
+    print("=== Code Nexus - Data Stream ===")
 
 
 if __name__ == "__main__":
