@@ -74,6 +74,18 @@ def main() -> None:
     numeric = NumericProcessor()
     show_validate(numeric, 42)
     show_validate(numeric, "Hello")
+    print(" Test invalid ingestion of string 'foo' without prior validation:")
+    try:
+        numeric.ingest("foo")
+    except InvalidDataError as e:
+        print(f" Got exception: {e}")
+    data: list[int | float] = [1, 2, 3, 4, 5]
+    print(f" Processing data: {data}")
+    numeric.ingest(data)
+    print(" Extracting 3 values...")
+    for _ in range(3):
+        rank, value = numeric.output()
+        print(f" Numeric value {rank}: {value}")
 
 
 if __name__ == "__main__":
