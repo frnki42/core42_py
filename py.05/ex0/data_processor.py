@@ -2,16 +2,6 @@ from abc import ABC, abstractmethod
 from typing import Any
 
 
-def is_number(x: Any) -> bool:
-    return isinstance(x, int | float) and not isinstance(x, bool)
-
-
-def all_numbers(xs: Any) -> bool:
-    if not isinstance(xs, list):
-        return False
-    return all(is_number(x) for x in xs)
-
-
 class DataProcessor(ABC):
     def __init__(self) -> None:
         self._items: list[tuple[int, str]] = []
@@ -30,8 +20,18 @@ class DataProcessor(ABC):
 
 
 class NumericProcessor(DataProcessor):
+    @staticmethod
+    def is_number(x: Any) -> bool:
+        return isinstance(x, int | float) and not isinstance(x, bool)
+
+    @staticmethod
+    def all_numbers(xs: Any) -> bool:
+        if not isinstance(xs, list):
+            return False
+        return all(NumericProcessor.is_number(x) for x in xs)
+
     def validate(self, data: Any) -> bool:
-        return is_number(data) or all_numbers(data)
+        return self.is_number(data) or self.all_numbers(data)
 
     def ingest(self, data: int | float | list[int | float]) -> None:
         if not self.validate(data):
