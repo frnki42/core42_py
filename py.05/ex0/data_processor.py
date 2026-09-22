@@ -57,7 +57,26 @@ class NumericProcessor(DataProcessor):
 
 
 class TextProcessor(DataProcessor):
-    ...
+    @staticmethod
+    def _is_text(x: Any) -> bool:
+        return isinstance(x, str)
+
+    @classmethod
+    def _all_text(cls, xs: Any) -> bool:
+        if not isinstance(xs, list):
+            return False
+        return all(cls._is_text(x) for x in xs)
+
+    def validate(self, data: Any) -> bool:
+        return self._is_text(data) or self._all_text(data)
+
+    def ingest(self, data: str | list[str]) -> None:
+        if not self.validate(data):
+            raise InvalidDataError("Improper text data")
+        items = data if isinstance(data, list) else [data]
+        for item in items:
+            self._items.append((self._count, item))
+            self._count += 1
 
 
 class LogProcessor(DataProcessor):
@@ -68,9 +87,7 @@ def show_validate(proc: DataProcessor, value: Any) -> None:
     print(f" Trying to validate input '{value}': {proc.validate(value)}")
 
 
-def main() -> None:
-    print("=== Code Nexus - Data Processor ===\n")
-    print("Testing Numeric Processor...")
+def show_numeric_proc() -> None:
     numeric = NumericProcessor()
     show_validate(numeric, 42)
     show_validate(numeric, "Hello")
@@ -86,6 +103,25 @@ def main() -> None:
     for _ in range(3):
         rank, value = numeric.output()
         print(f" Numeric value {rank}: {value}")
+
+
+def show_text_proc() -> None:
+    text = TextProcessor()
+    show_validate(text, 42)
+    data = ["Hello", "Nexus", "World"]
+    print(f" Processing data: {data}")
+    text.ingest(data)
+    print(" Extracting 1 value...")
+    rank, value = text.output()
+    print(f" Text value {rank}: {value}")
+
+
+def main() -> None:
+    print("=== Code Nexus - Data Processor ===")
+    print("\nTesting Numeric Processor...")
+    show_numeric_proc()
+    print("\nTesting Text Processor...")
+    show_text_proc()
 
 
 if __name__ == "__main__":
