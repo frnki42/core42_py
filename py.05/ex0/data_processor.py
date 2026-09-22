@@ -2,6 +2,10 @@ from abc import ABC, abstractmethod
 from typing import Any
 
 
+LOG_LEVEL = "log_level"
+LOG_MESSAGE = "log_message"
+
+
 class ProcessingError(Exception):
     """Base error for all data processor failures."""
 
@@ -80,7 +84,34 @@ class TextProcessor(DataProcessor):
 
 
 class LogProcessor(DataProcessor):
-    ...
+    @staticmethod
+    def _is_log(x: Any) -> bool:
+        return (
+                isinstance(x, dict)
+                and LOG_LEVEL in x
+                and LOG_MESSAGE in x
+                and all(isinstance(k, str) for k in x.keys())
+                and all(isinstance(v, str) for v in x.values())
+        )
+
+    @classmethod
+    def _all_logs(cls, xs: Any) -> bool:
+        if not isinstance(xs, list):
+            return False
+        return all(cls._is_log(x) for x in xs)
+
+    def validate(self, data: Any) -> bool:
+        return self._is_log(data) or self._all_logs(data)
+
+    def ingest(self, data: dict[str, str] | list[dict[str, str]]) -> None:
+        if not self.validate(data):
+            raise InvalidDataError("Improper log data")
+        items = data if isinstance(data, list) else [data]
+        for item in items:
+            level = item[LOG_LEVEL]
+            message = item[LOG_MESSAGE]
+            self._items.append((self._count, f"{level}: {message}"))
+            self._count += 1
 
 
 def show_validate(proc: DataProcessor, value: Any) -> None:
@@ -116,12 +147,29 @@ def show_text_proc() -> None:
     print(f" Text value {rank}: {value}")
 
 
+def show_log_proc() -> None:
+    log = LogProcessor()
+    show_validate(log, "Hello")
+    data = [
+        {LOG_LEVEL: "NOTICE", LOG_MESSAGE: "Connection to server"},
+        {LOG_LEVEL: "ERROR", LOG_MESSAGE: "Unauthorized access!!"},
+    ]
+    print(f" Processing data: {data}")
+    log.ingest(data)
+    print(" Extracting 2 values...")
+    for _ in range(2):
+        rank, value = log.output()
+        print(f" Log entry {rank}: {value}")
+
+
 def main() -> None:
     print("=== Code Nexus - Data Processor ===")
     print("\nTesting Numeric Processor...")
     show_numeric_proc()
     print("\nTesting Text Processor...")
     show_text_proc()
+    print("\nTesting Log Processor...")
+    show_log_proc()
 
 
 if __name__ == "__main__":
