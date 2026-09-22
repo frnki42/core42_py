@@ -35,17 +35,17 @@ class DataProcessor(ABC):
 
 class NumericProcessor(DataProcessor):
     @staticmethod
-    def is_number(x: Any) -> bool:
+    def _is_number(x: Any) -> bool:
         return isinstance(x, int | float) and not isinstance(x, bool)
 
-    @staticmethod
-    def all_numbers(xs: Any) -> bool:
+    @classmethod
+    def _all_numbers(cls, xs: Any) -> bool:
         if not isinstance(xs, list):
             return False
-        return all(NumericProcessor.is_number(x) for x in xs)
+        return all(cls._is_number(x) for x in xs)
 
     def validate(self, data: Any) -> bool:
-        return self.is_number(data) or self.all_numbers(data)
+        return self._is_number(data) or self._all_numbers(data)
 
     def ingest(self, data: int | float | list[int | float]) -> None:
         if not self.validate(data):
