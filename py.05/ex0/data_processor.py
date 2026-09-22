@@ -36,8 +36,6 @@ class NumericProcessor(DataProcessor):
     def ingest(self, data: int | float | list[int | float]) -> None:
         if not self.validate(data):
             raise TypeError("Improper numeric data")
-        if not isinstance(data, list):
-            data = [data]
         items = data if isinstance(data, list) else [data]
         for item in items:
             self._items.append((self._count, str(item)))
