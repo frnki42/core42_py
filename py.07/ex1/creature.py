@@ -2,7 +2,17 @@ from ex0.creature import Creature
 from .capability import HealCapability, TransformCapability
 
 
-class Sproutling(Creature, HealCapability):
+class HealingCreature(Creature, HealCapability):
+    ...
+
+
+class TransformingCreature(Creature, TransformCapability):
+    def __init__(self, name: str, creature_type: str) -> None:
+        Creature.__init__(self, name, creature_type)
+        TransformCapability.__init__(self)
+
+
+class Sproutling(HealingCreature):
     def __init__(self) -> None:
         super().__init__("Sproutling", "Grass")
 
@@ -13,7 +23,7 @@ class Sproutling(Creature, HealCapability):
         return f"{self.name} heals itself for a small amount"
 
 
-class Bloomelle(Creature, HealCapability):
+class Bloomelle(HealingCreature):
     def __init__(self) -> None:
         super().__init__("Bloomelle", "Grass/Fairy")
 
@@ -24,10 +34,9 @@ class Bloomelle(Creature, HealCapability):
         return f"{self.name} heals itself and others for a large amount"
 
 
-class Shiftling(Creature, TransformCapability):
+class Shiftling(TransformingCreature):
     def __init__(self) -> None:
-        Creature.__init__(self, "Shiftling", "Normal")
-        TransformCapability.__init__(self)
+        super().__init__("Shiftling", "Normal")
 
     def attack(self) -> str:
         if self.transformed:
@@ -43,10 +52,9 @@ class Shiftling(Creature, TransformCapability):
         return f"{self.name} returns to normal."
 
 
-class Morphagon(Creature, TransformCapability):
+class Morphagon(TransformingCreature):
     def __init__(self) -> None:
-        Creature.__init__(self, "Morphagon", "Normal/Dragon")
-        TransformCapability.__init__(self)
+        super().__init__("Morphagon", "Normal/Dragon")
 
     def attack(self) -> str:
         if self.transformed:
