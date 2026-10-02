@@ -48,6 +48,18 @@ def print_install_instructions() -> None:
     print("Run the program again: poetry run python loading.py")
 
 
+def print_tool_comparison() -> None:
+    print("\nComparing package managers:")
+    print(f"Environment: {sys.prefix}")
+    is_poetry_env = "pypoetry" in sys.prefix
+    if is_poetry_env:
+        print("Active manager: Poetry")
+    else:
+        print("Active manager: pip (venv)")
+    print("pip: requirements.txt, venv created by you")
+    print("Poetry: pyproject.toml + poetry.lock, venv created by Poetry")
+
+
 def check_dependencies() -> list[str]:
     print("Checking dependencies:")
     missing: list[str] = []
@@ -68,6 +80,7 @@ def main() -> None:
     if missing_dependencies:
         print_install_instructions()
         sys.exit(1)
+    print_tool_comparison()
     try:
         run_matrix_analysis()
     except OSError as e:
