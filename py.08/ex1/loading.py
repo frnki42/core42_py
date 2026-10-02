@@ -10,11 +10,15 @@ DEPENDENCIES = {
 SAMPLE_SIZE = 1000
 SEED = 42
 SUPPRESSION_FACTOR = 0.5
+PNG_NAME = "matrix_analysis.png"
 
 
 def run_matrix_analysis() -> None:
     import numpy as np
     import pandas as pd
+    import matplotlib
+    matplotlib.use("Agg")
+    import matplotlib.pyplot as plt
     print("\nAnalyzing Matrix data...")
     rng = np.random.default_rng(seed=SEED)
     signal_strengths = rng.random(SAMPLE_SIZE)
@@ -23,6 +27,12 @@ def run_matrix_analysis() -> None:
     signals["suppressed_signal_strength"] = (
         signals["signal_strength"] * SUPPRESSION_FACTOR
     )
+    print("Generating visualization...")
+    signals.plot(title="Matrix signal strength")
+    plt.savefig(PNG_NAME)
+    plt.close()
+    print("\nAnalysis complete!")
+    print(f"Results saved to: {PNG_NAME}")
 
 
 def print_install_instructions() -> None:
@@ -58,7 +68,11 @@ def main() -> None:
     if missing_dependencies:
         print_install_instructions()
         sys.exit(1)
-    run_matrix_analysis()
+    try:
+        run_matrix_analysis()
+    except OSError as e:
+        print(f"Couldn't save visualization: {e}")
+        sys.exit(1)
 
 
 if __name__ == "__main__":
