@@ -7,6 +7,16 @@ DEPENDENCIES = {
     "numpy": "Numerical computation",
     "matplotlib": "Visualization"
 }
+SAMPLE_SIZE = 1000
+SEED = 42
+
+
+def run_matrix_analysis() -> None:
+    import numpy as np
+    print("\nAnalyzing Matrix data...")
+    rng = np.random.default_rng(seed=SEED)
+    signal_strengths = rng.random(SAMPLE_SIZE)
+    print(f"Processing {signal_strengths.size} data points...")
 
 
 def print_install_instructions() -> None:
@@ -42,6 +52,7 @@ def main() -> None:
     if missing_dependencies:
         print_install_instructions()
         sys.exit(1)
+    run_matrix_analysis()
 
 
 if __name__ == "__main__":
