@@ -9,14 +9,20 @@ DEPENDENCIES = {
 }
 SAMPLE_SIZE = 1000
 SEED = 42
+SUPPRESSION_FACTOR = 0.5
 
 
 def run_matrix_analysis() -> None:
     import numpy as np
+    import pandas as pd
     print("\nAnalyzing Matrix data...")
     rng = np.random.default_rng(seed=SEED)
     signal_strengths = rng.random(SAMPLE_SIZE)
     print(f"Processing {signal_strengths.size} data points...")
+    signals = pd.DataFrame({"signal_strength": signal_strengths})
+    signals["suppressed_signal_strength"] = (
+        signals["signal_strength"] * SUPPRESSION_FACTOR
+    )
 
 
 def print_install_instructions() -> None:
