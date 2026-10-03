@@ -12,24 +12,32 @@ CONFIG_VARS = (
 
 def print_config(config: dict[str, str | None]) -> None:
     print("\nConfiguration loaded:")
-    matrix_mode_status = config["MATRIX_MODE"] or "not set"
-    log_level_status = config["LOG_LEVEL"] or "not set"
-    if config["DATABASE_URL"]:
-        database_url_status = "Connected to local instance"
+    mode = config["MATRIX_MODE"] or "development"
+    is_production = mode == "production"
+    if not config["DATABASE_URL"]:
+        database_status = "not set"
+    elif is_production:
+        database_status = "Connected to production database"
     else:
-        database_url_status = "not set"
+        database_status = "Connected to local instance"
     if config["API_KEY"]:
         api_key_status = "Authenticated"
     else:
         api_key_status = "not set"
+    if config["LOG_LEVEL"]:
+        log_level = config["LOG_LEVEL"]
+    elif is_production:
+        log_level = "INFO"
+    else:
+        log_level = "DEBUG"
     if config["ZION_ENDPOINT"]:
         zion_endpoint_status = "Online"
     else:
         zion_endpoint_status = "Offline"
-    print(f"Mode: {matrix_mode_status}")
-    print(f"Database: {database_url_status}")
+    print(f"Mode: {mode}")
+    print(f"Database: {database_status}")
     print(f"API Access: {api_key_status}")
-    print(f"Log Level: {log_level_status}")
+    print(f"Log Level: {log_level}")
     print(f"Zion Network: {zion_endpoint_status}")
 
 
