@@ -56,6 +56,9 @@ def print_tool_comparison() -> None:
         print("Active manager: Poetry")
     else:
         print("Active manager: pip (venv)")
+    print("Installed versions in this environment:")
+    for name in DEPENDENCIES:
+        print(f" {name}: {version(name)}")
     print("pip: requirements.txt, venv created by you")
     print("Poetry: pyproject.toml + poetry.lock, venv created by Poetry")
 
