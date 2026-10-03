@@ -11,7 +11,7 @@ CONFIG_VARS = (
 
 
 def print_config(config: dict[str, str | None]) -> None:
-    print("Configuration loaded:")
+    print("\nConfiguration loaded:")
     matrix_mode_status = config["MATRIX_MODE"] or "not set"
     log_level_status = config["LOG_LEVEL"] or "not set"
     if config["DATABASE_URL"]:
@@ -33,6 +33,12 @@ def print_config(config: dict[str, str | None]) -> None:
     print(f"Zion Network: {zion_endpoint_status}")
 
 
+def print_missing_warnings(config: dict[str, str | None]) -> None:
+    for name in CONFIG_VARS:
+        if not config[name]:
+            print(f"WARNING: {name} is not set")
+
+
 def load_config() -> dict[str, str | None]:
     config: dict[str, str | None] = {}
     for name in CONFIG_VARS:
@@ -44,15 +50,16 @@ def load_env_file() -> bool:
     try:
         from dotenv import load_dotenv
     except ImportError:
-        print("WARNING: python-dotenv not installed, .env file ignored\n")
+        print("\nWARNING: python-dotenv not installed, .env file ignored")
         return False
     return load_dotenv()
 
 
 def main() -> None:
-    print("\nORACLE STATUS: Reading the Matrix...\n")
+    print("\nORACLE STATUS: Reading the Matrix...")
     load_env_file()
     config = load_config()
+    print_missing_warnings(config)
     print_config(config)
 
 
