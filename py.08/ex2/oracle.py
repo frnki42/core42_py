@@ -1,5 +1,4 @@
 import os
-from dotenv import load_dotenv
 
 
 CONFIG_VARS = (
@@ -41,9 +40,18 @@ def load_config() -> dict[str, str | None]:
     return config
 
 
+def load_env_file() -> bool:
+    try:
+        from dotenv import load_dotenv
+    except ImportError:
+        print("WARNING: python-dotenv not installed, .env file ignored\n")
+        return False
+    return load_dotenv()
+
+
 def main() -> None:
-    load_dotenv()
     print("\nORACLE STATUS: Reading the Matrix...\n")
+    load_env_file()
     config = load_config()
     print_config(config)
 
