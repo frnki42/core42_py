@@ -8,11 +8,14 @@ CONFIG_VARS = (
     "LOG_LEVEL",
     "ZION_ENDPOINT",
 )
+VALID_MODES = ("development", "production")
 
 
 def print_config(config: dict[str, str | None]) -> None:
-    print("\nConfiguration loaded:")
     mode = config["MATRIX_MODE"] or "development"
+    if mode not in VALID_MODES:
+        print(f"WARNING: unknown MATRIX_MODE '{mode}', using development")
+        mode = "development"
     is_production = mode == "production"
     if not config["DATABASE_URL"]:
         database_status = "not set"
@@ -34,6 +37,7 @@ def print_config(config: dict[str, str | None]) -> None:
         zion_endpoint_status = "Online"
     else:
         zion_endpoint_status = "Offline"
+    print("\nConfiguration loaded:")
     print(f"Mode: {mode}")
     print(f"Database: {database_status}")
     print(f"API Access: {api_key_status}")
