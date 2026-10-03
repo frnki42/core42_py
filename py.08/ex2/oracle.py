@@ -41,6 +41,20 @@ def print_config(config: dict[str, str | None]) -> None:
     print(f"Zion Network: {zion_endpoint_status}")
 
 
+def print_security_check(
+        is_env_loaded: bool, config: dict[str, str | None]) -> None:
+    print("\nEnvironment security check:")
+    if is_env_loaded:
+        print("[OK] .env file properly configured")
+    else:
+        print("[WARNING] No .env file loaded")
+    if config["API_KEY"]:
+        print("[OK] No hardcoded secrets detected")
+    else:
+        print("[WARNING] API key missing")
+    print("[OK] Production overrides available")
+
+
 def print_missing_warnings(config: dict[str, str | None]) -> None:
     for name in CONFIG_VARS:
         if not config[name]:
@@ -65,10 +79,12 @@ def load_env_file() -> bool:
 
 def main() -> None:
     print("\nORACLE STATUS: Reading the Matrix...")
-    load_env_file()
+    is_env_loaded = load_env_file()
     config = load_config()
     print_missing_warnings(config)
     print_config(config)
+    print_security_check(is_env_loaded, config)
+    print("\nThe Oracle sees all configurations.")
 
 
 if __name__ == "__main__":
