@@ -31,6 +31,8 @@ class SpaceMission(BaseModel):
     destination: str = Field(min_length=3, max_length=50)
     launch_date: datetime
     duration_days: int = Field(ge=1, le=3650)
+    # nested models: each CrewMember is validated first, the mission
+    # validator below only runs if every crew member is valid
     crew: list[CrewMember] = Field(min_length=1, max_length=12)
     mission_status: str = "planned"
     budget_millions: float = Field(ge=1.0, le=10000.0)
@@ -52,7 +54,6 @@ class SpaceMission(BaseModel):
         return self
 
 
-# create crew members according to subject and imaginary values
 def create_crew_members() -> list[CrewMember]:
     sarah_connor = CrewMember(
         member_id="0000000000",
@@ -84,7 +85,6 @@ def create_crew_members() -> list[CrewMember]:
     return [sarah_connor, john_smith, alice_johnson]
 
 
-# create space mission according to subject and imaginary values
 def create_space_mission(crew_members: list[CrewMember]) -> SpaceMission:
     space_mission = SpaceMission(
         mission_id="M2024_MARS",
